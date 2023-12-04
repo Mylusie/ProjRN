@@ -1,1 +1,2 @@
 https://www.cs.toronto.edu/~kriz/cifar.html
+https://www.tensorflow.org/tutorials/images/cnn?hl=fr (Aide si jamais)
