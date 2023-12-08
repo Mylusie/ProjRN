@@ -126,7 +126,20 @@ def gen_thumbnails(image, n=3):
 #			thumbnail : Thumbnail being tested
 # output : A boolean indicating whether or not to add the new one
 def filter_th(entry_th, thumbnail):
+
+	# Check if the entry_th is empty, if so, add the thumbnail
+	if not entry_th:
+	        return True
+		    
+	# Compare the new thumbnail with the existing ones
+	for existing_thumbnail in entry_th:
+	         # Comparaison des miniatures
+	        if thumbnail == existing_thumbnail:
+	            	return False  # Si elle est identique à un truc existante, ne pas l'ajouter
+	
 	return True
+
+
 
  # Try NN over a list of images
  # input : model 	  : The NN model
