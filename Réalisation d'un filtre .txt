@@ -1,0 +1,38 @@
+Réalisation d'un filtre :
+
+L'objectif est de déterminer si la miniaturisation d'une image est pertinente pour être ajoutée à une base de données. Pour ce faire, nous comparons les différentes données de la base avec celle que nous voulons ajouter. Si la nouvelle donnée est similaire ou égale à une donnée existante, nous évitons de l'ajouter pour éviter les redondances qui pourraient fausser les résultats finaux.
+
+Première méthode :
+
+La première méthode consiste à vérifier simplement si la miniaturisation est déjà présente dans la base. Cette approche repose sur une comparaison exacte. Bien que cela soit un bon début, la question se pose : est-ce intéressant d'ajouter une miniaturisation dont les pixels diffèrent de 1 ou 2 par rapport à un élément existant ? Cette méthode manque de flexibilité, donc une autre méthode plus souple est explorée.
+
+Deuxième méthode : Méthode de tolérance
+
+Nous réexaminons la base de données avec la nouvelle donnée, mais cette fois, en ajoutant une tolérance. L'idée est de comparer chaque pixel et de vérifier si, pour chaque position, la différence se situe dans la plage de tolérance. Si toutes les différences sont inférieures à la tolérance, nous n'ajoutons pas la nouvelle donnée. Cela signifie qu'elle est trop similaire à ce qui existe déjà dans la base. La décision est basée sur la globalité des différences inférieures à la tolérance, car une différence isolée pourrait rendre le pixel non similaire.
+
+Avantages :
+
+- Flexibilité aux petites variations : Tient compte des légères différences entre les valeurs, utile si les pixels sont similaires malgré des variations mineures des données.
+- Simplicité : Facile à mettre en œuvre car elle compare simplement deux tableaux pour déterminer leur similitude.
+
+Inconvénients :
+- Dépendance à la tolérance choisie : Risque de définir des similarités pour des données différentes si la tolérance est trop grande, ou d'inclure des données similaires si elle est trop faible.
+- Complexité des données : Peut prendre du temps pour de grands tableaux.
+
+Méthode 3 : Distance euclidienne
+
+Calcule la distance entre deux tableaux de valeurs dans un espace multidimensionnel pour mesurer leur similarité. Une distance plus petite indique une plus grande similitude entre les tableaux.
+
+Avantages :
+
+- Facile à implémenter avec NumPy.
+- Utilisation commune en apprentissage automatique pour des espaces de dimensions variées.
+- Ne dépend pas d'un seuil de tolérance, offrant une mesure précise de la différence entre les tableaux.
+
+Inconvénients :
+
+-Sensibilité aux données aberrantes et à l'échelle des données.
+
+Méthode 4 : Réseau de neurones siamois
+
+Ce réseau permet de comparer deux entrées pour déterminer leur similarité. Il s'appuie sur la distance euclidienne pour l'apprentissage, ce qui permet de prédire si une nouvelle donnée est similaire à notre base. Bien que cette méthode soit plus complexe à mettre en place, elle pourrait être utile si la base de données devient très grande, nécessitant des calculs longs pour chaque comparaison.
