@@ -204,7 +204,7 @@ def denormalise(image):
 def show_im(image):
 
 	cv2.imshow("Image", image)
-	#cv2.waitKey(0)
+	cv2.waitKey(0)
 	cv2.destroyAllWindows()
 	
 	return
