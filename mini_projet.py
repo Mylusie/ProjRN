@@ -24,6 +24,10 @@ KERNEL_SIZE = 3
 
 #NN optimiser
 OPTIMIZER = "adam"#SGD(learning_rate=0.01)
+
+#Réalisation de test
+Compteur = 0
+
  ### Fonctions
 
 # Allow to generate the images database and it's edged with Canny version
@@ -128,15 +132,30 @@ def gen_thumbnails(image, n=3):
 def filter_th(entry_th, thumbnail):
 
 	# Check if the entry_th is empty, if so, add the thumbnail
-	if not entry_th:
-	        return True
+	if len(entry_th) == 0:
+	    return True
 		    
 	# Compare the new thumbnail with the existing ones
+	#Methode 1 : regarder si les tableaux sont égaux
 	for existing_thumbnail in entry_th:
-	         # Comparaison des miniatures
-	        if thumbnail == existing_thumbnail:
-	            	return False  # Si elle est identique à un truc existante, ne pas l'ajouter
-	
+
+		#Methode 1 : regarder si les tableaux sont égaux
+	    # Vérifier si les tableaux sont égaux élément par élément
+			#if np.array_equal(thumbnail, existing_thumbnail):
+				#return False
+				# Si elle est identique à un truc existante, ne pas l'ajouter
+
+		#Methode 2 : Regarder si les tableaux sont proche avec une limite de tolérance
+		# Comparer les éléments avec une tolérance
+			comparison = np.isclose(existing_thumbnail, thumbnail, atol=2)
+			if comparison.all()== True: #Si la comparaison des deux est similaire dans la zone de tolérance alors on ne l'ajoute pas
+				return False
+
+		#Methode 3 : Mesure la distance euclidienne et definir une limite
+		#Calculer la distance euclidienne entre les tableaux
+			#disteu = np.linalg.norm(existing_thumbnail - thumbnail)
+			#if disteu < 5:
+				#return False
 	return True
 
 
@@ -185,7 +204,7 @@ def denormalise(image):
 def show_im(image):
 
 	cv2.imshow("Image", image)
-	cv2.waitKey(0)
+	#cv2.waitKey(0)
 	cv2.destroyAllWindows()
 	
 	return
@@ -202,6 +221,7 @@ if __name__ == "__main__":
 	entry = gen_entry(datab) # (0) is a list of entry for the NN and (1) is the 
 									# list of what's suppose to get out from the NN
 
+	print(Compteur)
 
 	training_limit = floor(len(entry[0])*0.7) 
 
