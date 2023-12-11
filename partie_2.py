@@ -36,10 +36,7 @@ def gen_array( length, height, top_left):
 
    # Création d'un tableau 20x20 rempli de zéros
     rectangle = np.zeros((20, 20))
-
-   # Création d'un tableau 20x20 rempli de zéros
-    rectangle = np.zeros((20, 20))
-
+	
     # Remplissage du rectangle dans le tableau
     for i in range(top_left[0], top_left[0] + height):
         for j in range(top_left[1], top_left[1] + length):
@@ -101,15 +98,13 @@ if __name__ == "__main__":
         rectangles_to_save.append(rectangle_array)
 
     # Enregistrer les rectangles dans un fichier
-    save_rectangle_array_list(rectangles_to_save, "50_random_rectangles.npy")
+    save_rectangle_array_list(rectangles_to_save, "100rectangle.npy")
 
     # Charger les rectangles à partir du fichier
-    loaded_rectangles = load_rectangle_array_list("50_random_rectangles.npy")
+    loaded_rectangles = load_rectangle_array_list("100rectangle.npy")
 
     # Afficher chaque rectangle chargé
-    for idx, rectangle in enumerate(loaded_rectangles, start=1):
-        print(f"Rectangle {idx}:")
-        print(rectangle)
+    for rectangle in enumerate(loaded_rectangles, start=1):
         plot_array(rectangle)
 
     exit(0)
