@@ -4,7 +4,7 @@ from tensorflow import keras
 from keras.models import Sequential
 from keras.layers import Input, Dense, Dropout, Activation
 from keras.optimizers import SGD
-
+import random
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -71,13 +71,15 @@ def gen_entry(database):
 	image_th = gen_thumbnails(database[0][4], KERNEL_SIZE)
 	size = len(database[1][4])
 	image_edges = np.reshape(database[1][4],size*size)
-
-	for i in range(len(image_th)):
-		should_add = filter_th(entry_th, image_th[i])
+	while len(entry_th) < 9000:
+		print(len(entry_th))
+		# Générer un nombre aléatoire entre 1 et 10 inclus
+		randomi = random.randint(0, len(image_th)-1)
+		should_add = filter_th(entry_th, image_th[randomi])
 		if(should_add):
-			entry_th.append(image_th[i])
-			entry_res.append(image_edges[i])
-	### End of the part
+			entry_th.append(image_th[randomi])
+			entry_res.append(image_edges[randomi])
+		### End of the part
 
 	entry = (entry_th, entry_res)
 	return entry
@@ -147,15 +149,15 @@ def filter_th(entry_th, thumbnail):
 
 		#Methode 2 : Regarder si les tableaux sont proche avec une limite de tolérance
 		# Comparer les éléments avec une tolérance
-			comparison = np.isclose(existing_thumbnail, thumbnail, atol=2)
-			if comparison.all()== True: #Si la comparaison des deux est similaire dans la zone de tolérance alors on ne l'ajoute pas
-				return False
+			#comparison = np.isclose(existing_thumbnail, thumbnail, atol=2)
+			#if comparison.all()== True: #Si la comparaison des deux est similaire dans la zone de tolérance alors on ne l'ajoute pas
+				#return False
 
 		#Methode 3 : Mesure la distance euclidienne et definir une limite
 		#Calculer la distance euclidienne entre les tableaux
-			#disteu = np.linalg.norm(existing_thumbnail - thumbnail)
-			#if disteu < 5:
-				#return False
+			disteu = np.linalg.norm(existing_thumbnail - thumbnail)
+			if disteu < 5:
+				return False
 	return True
 
 
